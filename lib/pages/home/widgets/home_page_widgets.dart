@@ -116,7 +116,7 @@ Widget _toggleDayText(String text, {bool isActive = false}) {
   );
 }
 
-Widget stepsWalked() {
+Widget stepsWalked(steps) {
   return Container(
     margin: const EdgeInsets.only(top: 8),
     child: Column(
@@ -131,7 +131,7 @@ Widget stepsWalked() {
         ),
         SizedBox(height: 10.h),
         Text(
-          "7,390",
+          steps,
           style: TextStyle(
             color: AppColors.textPrimary,
             fontSize: 60.sp,
