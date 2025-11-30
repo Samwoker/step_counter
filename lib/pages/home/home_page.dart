@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:step_counter/common/shared/color.dart';
 import 'package:step_counter/pages/home/widgets/home_page_widgets.dart';
 
 String formatDate(DateTime d) {
@@ -83,13 +85,50 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [BottomNavigationBarItem(icon: Icon(Icons.home), label: "")],
+      ),
       body: Container(
-        child: Column(
-          children: [
-            toggleDay(),
-            SizedBox(height: 20),
-            stepsWalked(_steps),
-            friendsText(),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: toggleDay()),
+            SliverToBoxAdapter(child: SizedBox(height: 20)),
+            SliverToBoxAdapter(child: stepsWalked(_steps)),
+            SliverToBoxAdapter(child: friendsText()),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 18.h),
+              sliver: SliverGrid(
+                delegate: SliverChildBuilderDelegate((
+                  BuildContext context,
+                  int index,
+                ) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      height: 8,
+                      margin: EdgeInsets.only(left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: index == 0
+                            ? BorderRadius.only(
+                                topLeft: Radius.circular(20.h),
+                                topRight: Radius.circular(20.h),
+                              )
+                            : BorderRadius.circular(0),
+                        color: AppColors.canvas,
+                      ),
+                      child: leaderBoardItems(index),
+                    ),
+                  );
+                }),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  // mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 5,
+                ),
+              ),
+            ),
           ],
         ),
       ),

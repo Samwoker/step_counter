@@ -265,3 +265,93 @@ Widget friendsText() {
     ),
   );
 }
+
+Widget leaderBoardItems(int index) {
+  return Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 16),
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColors.primaryBrand,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  "SA",
+                  style: TextStyle(
+                    color: AppColors.background,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 14, left: 6),
+                  child: Text(
+                    "Samuel",
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 6),
+                  child: Icon(
+                    Icons.emoji_events,
+                    color: index == 0
+                        ? Colors.greenAccent
+                        : index == 1
+                        ? AppColors.primaryBrand
+                        : index == 2
+                        ? AppColors.alert
+                        : AppColors.textSecondary,
+                    size: 23,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 14, right: 6),
+              child: Text(
+                "17,843",
+                style: TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 6),
+              child: Text(
+                "22 min age",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
