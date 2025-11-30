@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:step_counter/common/shared/color.dart';
+import 'package:step_counter/pages/home/bloc/home_blocs.dart';
+import 'package:step_counter/pages/home/bloc/home_events.dart';
+import 'package:step_counter/pages/home/bloc/home_states.dart';
 import 'package:step_counter/pages/home/widgets/home_page_widgets.dart';
 
 String formatDate(DateTime d) {
@@ -19,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
+  String _status = '?', _steps = '0';
 
   @override
   void initState() {
@@ -80,75 +84,105 @@ class _HomePageState extends State<HomePage> {
     if (!mounted) return;
   }
 
-  int index = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: buildAppBar(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_fire_department),
-            label: "",
-          ),
-        ],
-        currentIndex: index,
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: AppColors.primaryBrand,
-        unselectedItemColor: AppColors.textSecondary,
-        onTap: (value) {},
-      ),
-      body: Container(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(child: toggleDay()),
-            SliverToBoxAdapter(child: SizedBox(height: 20)),
-            SliverToBoxAdapter(child: stepsWalked(_steps)),
-            SliverToBoxAdapter(child: friendsText()),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 18.h),
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate((
-                  BuildContext context,
-                  int index,
-                ) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: double.infinity,
-                      height: 8,
-                      margin: EdgeInsets.only(left: 15, right: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: index == 0
-                            ? BorderRadius.only(
-                                topLeft: Radius.circular(20.h),
-                                topRight: Radius.circular(20.h),
-                              )
-                            : BorderRadius.circular(0),
-                        color: AppColors.canvas,
-                      ),
-                      child: leaderBoardItems(index),
-                    ),
-                  );
-                }),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  // mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: 5,
-                ),
+    return BlocBuilder<HomeBlocs, HomeStates>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: buildAppBar(),
+          bottomNavigationBar: Container(
+            width: 375.w,
+            height: 58.h,
+            decoration: BoxDecoration(
+              color: AppColors.canvas,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.h),
+                topRight: Radius.circular(20.h),
               ),
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.grey.withValues(alpha: 0.2),
+              //     spreadRadius: 1,
+              //     blurRadius: 1,
+              //   ),
+              // ],
             ),
-          ],
-        ),
-      ),
+            child: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.emoji_events),
+                  label: "",
+                ),
+                BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.local_fire_department),
+                  label: "",
+                ),
+              ],
+
+              currentIndex: state.index,
+              elevation: 0,
+              type: BottomNavigationBarType.fixed,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              selectedItemColor: AppColors.primaryBrand,
+              unselectedItemColor: AppColors.textSecondary,
+              onTap: (value) {
+                context.read<HomeBlocs>().add(TriggerHomeEvent(value));
+              },
+            ),
+          ),
+          body: Container(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: toggleDay()),
+                SliverToBoxAdapter(child: SizedBox(height: 20)),
+                SliverToBoxAdapter(child: stepsWalked(_steps)),
+                SliverToBoxAdapter(child: friendsText()),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 0.w,
+                    vertical: 18.h,
+                  ),
+                  sliver: SliverGrid(
+                    delegate: SliverChildBuilderDelegate((
+                      BuildContext context,
+                      int index,
+                    ) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: double.infinity,
+                          height: 8,
+                          margin: EdgeInsets.only(left: 15, right: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: index == 0
+                                ? BorderRadius.only(
+                                    topLeft: Radius.circular(20.h),
+                                    topRight: Radius.circular(20.h),
+                                  )
+                                : BorderRadius.circular(0),
+                            color: AppColors.canvas,
+                          ),
+                          child: leaderBoardItems(index),
+                        ),
+                      );
+                    }),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      // mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                      childAspectRatio: 5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
