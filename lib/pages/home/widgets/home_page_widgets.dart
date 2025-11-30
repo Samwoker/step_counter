@@ -204,3 +204,64 @@ Widget stepsWalked(steps) {
     ),
   );
 }
+
+Widget friendsText() {
+  return Container(
+    margin: EdgeInsets.only(left: 25, right: 25, top: 40),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.person, color: AppColors.textSecondary, size: 30),
+              Text(
+                "Friends",
+                style: TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 150,
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.canvas,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                "Add Walkers",
+                style: TextStyle(
+                  color: AppColors.alert,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              GestureDetector(
+                child: Container(
+                  width: 23,
+                  height: 23,
+                  decoration: BoxDecoration(
+                    color: AppColors.alert,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(Icons.add, color: Colors.white, size: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}

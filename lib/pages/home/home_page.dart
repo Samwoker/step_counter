@@ -26,29 +26,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onStepCount(StepCount event) {
-    // print(event);
+    print(event);
     setState(() {
       _steps = event.steps.toString();
     });
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
-    // print(event);
+    print(event);
     setState(() {
       _status = event.status;
     });
   }
 
   void onPedestrianStatusError(error) {
-    // print("onPedestrianStatusError: $error");
+    print("onPedestrianStatusError: $error");
     setState(() {
       _status = "Pedestrian Status not available";
     });
-    // print(_status);
+    print(_status);
   }
 
   void onStepCountError(error) {
-    // print("onStepCountError: $error");
+    print("onStepCountError: $error");
     setState(() {
       _steps = "Step Count not available";
     });
@@ -85,7 +85,12 @@ class _HomePageState extends State<HomePage> {
       appBar: buildAppBar(),
       body: Container(
         child: Column(
-          children: [toggleDay(), SizedBox(height: 20), stepsWalked(_steps)],
+          children: [
+            toggleDay(),
+            SizedBox(height: 20),
+            stepsWalked(_steps),
+            friendsText(),
+          ],
         ),
       ),
     );

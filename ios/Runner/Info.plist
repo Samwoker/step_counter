@@ -3,6 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
+	<key>NSMotionUsageDescription</key>
+<string>This application tracks your steps</string>
+<key>UIBackgroundModes</key>
+<array>
+    <string>processing</string>
+</array>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Step Counter</string>
