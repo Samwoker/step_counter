@@ -80,13 +80,30 @@ class _HomePageState extends State<HomePage> {
     if (!mounted) return;
   }
 
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(),
       bottomNavigationBar: BottomNavigationBar(
-        items: [BottomNavigationBarItem(icon: Icon(Icons.home), label: "")],
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.emoji_events), label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_fire_department),
+            label: "",
+          ),
+        ],
+        currentIndex: index,
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedItemColor: AppColors.primaryBrand,
+        unselectedItemColor: AppColors.textSecondary,
+        onTap: (value) {},
       ),
       body: Container(
         child: CustomScrollView(
