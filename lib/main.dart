@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:step_counter/common/shared/color.dart';
 import 'package:step_counter/pages/bloc_providers.dart';
 import 'package:step_counter/pages/home/home_page.dart';
+import 'package:step_counter/pages/signin/sign_in.dart';
 
 void main() {
   runApp(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: HomePage(),
+          home: SignIn(),
         ),
       ),
     );
