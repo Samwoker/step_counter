@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib/pages/sign_up/bloc/sign_up_blocs.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/pages/sign_up/bloc/sign_up_blocs.dart"
+        }
+    ]
+}

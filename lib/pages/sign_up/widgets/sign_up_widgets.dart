@@ -5,16 +5,14 @@ import 'package:step_counter/common/shared/color.dart';
 AppBar buildAppBar() {
   return AppBar(
     backgroundColor: Colors.white,
-    title: Center(
-      child: Container(
-        margin: EdgeInsets.only(top: 20.h),
-        child: Text(
-          "Login",
-          style: TextStyle(
-            color: AppColors.primaryBrand,
-            fontSize: 22.sp,
-            fontWeight: FontWeight.bold,
-          ),
+    title: Container(
+      margin: EdgeInsets.only(top: 20.h, left: 90.w),
+      child: Text(
+        "SignUp",
+        style: TextStyle(
+          color: AppColors.primaryBrand,
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
         ),
       ),
     ),
@@ -27,7 +25,7 @@ Widget buildTextField(
   void Function(String value) func,
 ) {
   return Container(
-    margin: EdgeInsets.only(left: 25.w, right: 25.w, top: 16.h),
+    margin: EdgeInsets.only(left: 25.w, right: 25.w, top: 22.h),
     width: 325.w,
     height: 50.h,
     decoration: BoxDecoration(
@@ -102,7 +100,7 @@ Widget buildButton(String buttonText, void Function() func) {
 
 Widget buildThirdPartyButtons(String btnText, String imageName) {
   return Container(
-    margin: EdgeInsets.only(left: 25.w, right: 25.w),
+    margin: EdgeInsets.only(left: 25.w, right: 25.w, top: 22.h),
     width: 325.w,
     height: 50.h,
     decoration: BoxDecoration(
@@ -143,7 +141,7 @@ Widget buildThirdPartyButtons(String btnText, String imageName) {
 Widget signUpAndSignInLinks(
   String infoText,
   String redirectLinkText,
-  Function() func,
+  void Function() func,
 ) {
   return Container(
     margin: EdgeInsets.only(top: 12.sp),

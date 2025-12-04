@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:step_counter/common/shared/color.dart';
+import 'package:step_counter/pages/signin/Sign_in_controller.dart';
 import 'package:step_counter/pages/signin/bloc/sign_in_blocs.dart';
 import 'package:step_counter/pages/signin/bloc/sign_in_events.dart';
 import 'package:step_counter/pages/signin/bloc/sign_in_states.dart';
@@ -25,33 +26,44 @@ class _SignInState extends State<SignIn> {
             child: Scaffold(
               backgroundColor: Colors.white,
               appBar: buildAppBar(),
-              body: Column(
-                children: [
-                  SizedBox(height: 50.h),
-                  buildTextField("Email", "email", (value) {
-                    context.read<SignInBlocs>().add(EmailEvent(value));
-                  }),
-                  buildTextField("Password", "password", (value) {
-                    context.read<SignInBlocs>().add(PasswordEvent(value));
-                  }),
-                  buildButton("Login"),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 12.h, bottom: 12.h),
-                      child: Text(
-                        "or",
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.normal,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 80.h),
+                    buildTextField("Email", "email", (value) {
+                      context.read<SignInBlocs>().add(EmailEvent(value));
+                    }),
+                    buildTextField("Password", "password", (value) {
+                      context.read<SignInBlocs>().add(PasswordEvent(value));
+                    }),
+                    buildButton("Login", () {
+                      SignInController(context: context).handleSignIn();
+                    }),
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 12.h, bottom: 12.h),
+                        child: Text(
+                          "or",
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  buildThirdPartyButtons("Continue with Google", "google"),
-                  SizedBox(height: 16.h),
-                  buildThirdPartyButtons("Continue With Facebook", "facebook"),
-                ],
+                    buildThirdPartyButtons("Continue with Google", "google"),
+                    SizedBox(height: 16.h),
+                    buildThirdPartyButtons(
+                      "Continue With Facebook",
+                      "facebook",
+                    ),
+                    SizedBox(height: 12.h),
+                    signUpAndSignInLinks("Create New Account", "SignUp", () {
+                      Navigator.of(context).pushNamed("/signup");
+                    }),
+                  ],
+                ),
               ),
             ),
           ),
